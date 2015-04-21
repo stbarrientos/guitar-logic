@@ -15,12 +15,12 @@ class Note
   end
 
   def next_half_step
-    return self.next_note if self.next_interval == 1 
+    return self.next_note if self.next_interval == 0.5 
     if self.name[1] == "#"
-      base = Note.reference self.name[0]
-      Note.new(self.name[0], base[:prev_interval], base[:next_interval]).next_note
+      base = Note.reference(self.name[0])
+      Note.new(base[:next_note])
     else
-      Note.new(self.name + "#", 0.5, 0.5)
+      Note.new(self.name + "#")
     end
   end
 
@@ -33,8 +33,7 @@ class Note
       self.next_interval = self.prev_interval = 0.5
     else
       ref = Note.reference self.name
-      next_interval = prev_interval = ref[:next_interval] == 1 ? 0.5 : 1
-      self.next_interval, self.prev_interval = next_interval, prev_interval
+      self.next_interval, self.prev_interval = ref[:next_interval], ref[:prev_interval]
     end
   end
 
@@ -59,5 +58,6 @@ class Note
 
 end
 
-# Note.new("A#").next_note.name
+puts Note.new("A").next_half_step.name
+
 

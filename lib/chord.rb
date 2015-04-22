@@ -1,4 +1,4 @@
-require "note"
+require "string"
 
 class Chord
 

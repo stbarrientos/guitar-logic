@@ -45,3 +45,15 @@ RSpec.describe String, "#fret" do
   end
 
 end
+
+RSpec.describe String, "#show_all_frets" do
+
+  context "return array of all notes including open note" do
+
+    it "returns [F,F#,G,G#,A,A#,B,C,D,D#,E] when asked for first 12 frets of E string" do
+      e = String.new("E")
+      expect(e.show_all_frets).to eq(["F","F#","G","G#","A","A#","B","C","C#","D","D#","E"])
+    end
+  end
+
+end

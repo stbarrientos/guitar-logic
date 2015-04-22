@@ -73,6 +73,4 @@ class Note
 
 end
 
-puts Note.new("A").next_half_step.name
-
 

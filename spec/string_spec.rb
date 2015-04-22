@@ -54,6 +54,26 @@ RSpec.describe String, "#show_all_frets" do
       e = String.new("E")
       expect(e.show_all_frets).to eq(["F","F#","G","G#","A","A#","B","C","C#","D","D#","E"])
     end
+
   end
 
 end
+
+RSpec.describe String, "#find_note" do
+
+  context "return frets of note on string" do
+
+    it "E find C# returns 9 and 21" do
+      e = String.new("E")
+      expect(e.find_note("C#")).to eq([9,21])
+    end
+
+    it "A find F returns 8 and 20" do
+      a = String.new("A")
+      expect(a.find_note("F")).to eq([8,20])
+    end
+
+  end
+
+end
+

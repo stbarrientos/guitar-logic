@@ -1,4 +1,4 @@
-require_relative "note.rb"
+require "note"
 
 class String
 
@@ -33,7 +33,10 @@ class String
     frets[:starting].upto(frets[:ending]).map { |f| fret(f).name }
   end
 
-end
+  def find_note(target)
+    return [0,12] if target == self.open_note.name
+    num = (0..12).select { |n| fret(n).name == target }
+    [num[0], num[0] + 12]
+  end
 
-# puts String.new("E").show_all_frets
-# puts String.new("E").fret(2).name
+end

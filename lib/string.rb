@@ -35,8 +35,8 @@ class String
 
   def find_note(target)
     return [0,12] if target == self.open_note.name
-    num = (0..12).select { |n| fret(n).name == target }
-    [num[0], num[0] + 12]
+    num = (0..12).detect { |n| fret(n).name == target }
+    [num, num + 12]
   end
 
 end

@@ -2,7 +2,7 @@ class Note
   
   attr_accessor :name, :prev_interval, :next_interval
 
-  def initialize(name, prev_interval = nil, next_interval = nil)
+  def initialize(name)
     @name = name
     classify
   end

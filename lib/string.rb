@@ -1,4 +1,4 @@
-require "note"
+require_relative "note.rb"
 
 class String
 

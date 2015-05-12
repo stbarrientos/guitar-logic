@@ -1,0 +1,18 @@
+<div id="fretboard">
+  <div class="frets">
+    <% 21.times do |x| %>
+    <div class="fret">
+      <p><%= x+1 %></p>
+    </div>
+    <% end %>
+  </div>
+<% @fretboard.each_with_index do |s| %>
+<div class="string">
+  <% s.each do |n| %>
+  <div class="note">
+    <p><%= n %></p>
+  </div>
+  <% end %>
+</div>
+<% end %>
+</div>

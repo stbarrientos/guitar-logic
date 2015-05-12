@@ -1,0 +1,19 @@
+#fretboard {
+
+}
+
+.string {
+  clear: both;
+}
+
+.note {
+  display:inline-block;
+  float:left;
+  width: 50px;
+}
+
+.fret {
+  display:inline-block;
+  float:left;
+  width: 50px;
+}

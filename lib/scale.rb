@@ -47,11 +47,11 @@ class Scale
       notes = []
       string = String.new(s)
 
-      scale_notes.each do |s|
+      scale_notes.each do |n|
         if options[:frets_only]
-          notes << string.find_note(s.name)
+          notes << string.find_note(n.name)
         else
-          note_hash = {name: s.name, frets: string.find_note(s.name)}
+          note_hash = {name: n.name, frets: string.find_note(n.name)}
           notes << note_hash
         end
       end

@@ -74,5 +74,3 @@ class Chord
 
 end
 
-puts Chord.diagnose(["G", "B","D"]).full_name
-

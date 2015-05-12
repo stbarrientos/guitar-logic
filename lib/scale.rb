@@ -42,7 +42,6 @@ class Scale
   def print_notes(options = {frets_only: false})
     scale_notes = get_scale_notes
     return "Unknown Scale. Please Create An Issue On Github For Review." unless scale_notes
-    puts scale_notes.inspect
     string_notes = []
     @tuning.each do |s|
       notes = []
@@ -68,13 +67,4 @@ class Scale
   end
 
 end
-
-# puts Scale.new("A Minor",[1,3,4,5,7]).print_notes(frets_only: true).inspect
-
-
-
-
-
-# A B C D E F# G A
-# 1 2 3  4 5 6  7  8
 

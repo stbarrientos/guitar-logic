@@ -2,7 +2,7 @@
   <div class="frets">
     <% 21.times do |x| %>
     <div class="fret">
-      <p><%= x+1 %></p>
+      <span><%= x+1 %></span>
     </div>
     <% end %>
   </div>
@@ -10,7 +10,7 @@
 <div class="string">
   <% s.each do |n| %>
   <div class="note">
-    <p><%= n %></p>
+    <span><%= n %></span>
   </div>
   <% end %>
 </div>

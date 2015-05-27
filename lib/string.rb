@@ -33,10 +33,14 @@ class String
     frets[:starting].upto(frets[:ending]).map { |f| fret(f).name }
   end
 
-  def find_note(target)
+  def show_whole_frets(frets = {starting: 1, ending: 12})
+    frets[:starting].upto(frets[:ending]).map { |f| fret(f).name.length > 1 ? "-" : fret(f).name }
+  end
+
+  def find_note(target, maximum = 21)
     return [0,12] if target == self.open_note.name
     num = (0..12).detect { |n| fret(n).name == target }
-    [num, num + 12]
+    num + 12 > maximum ? [num] : [num, num+12]
   end
 
 end

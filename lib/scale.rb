@@ -39,7 +39,7 @@ class Scale
     @degrees.map { |d| notes[d-1] }
   end
 
-  def print_notes(options = {frets_only: false})
+  def print_notes(options = {frets_only: false, maximum: 21})
     scale_notes = get_scale_notes
     return "Unknown Scale. Please Create An Issue On Github For Review." unless scale_notes
     string_notes = []
@@ -51,7 +51,7 @@ class Scale
         if options[:frets_only]
           notes << string.find_note(n.name)
         else
-          note_hash = {name: n.name, frets: string.find_note(n.name)}
+          note_hash = {name: n.name, frets: string.find_note(n.name, options[:maximum])}
           notes << note_hash
         end
       end

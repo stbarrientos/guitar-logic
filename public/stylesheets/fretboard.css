@@ -1,0 +1,32 @@
+.content {
+  margin: 30px;
+}
+
+#fretboard {
+  padding: 10px;
+  /*background-color: rgba(76,137,156,0.6);*/
+  overflow: auto;
+}
+
+.string {
+  clear: both;
+  margin-left: 60px;
+}
+
+.note {
+  display:inline-block;
+  float:left;
+  width: 50px;
+  height: 39px;
+}
+
+.fret {
+  display:inline-block;
+  float:left;
+  width: 50px;
+  height: 32px;
+}
+
+.frets {
+  margin-left: 60px;
+}

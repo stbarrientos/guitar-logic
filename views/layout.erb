@@ -1,10 +1,15 @@
 <html>
 <head>
   <title>Guitar-Logic</title>
-  <link href="fretboard.css" rel="stylesheet">
+  <link href="/stylesheets/fretboard.css" rel="stylesheet">
+  <script src="/javascripts/jquery-1.11.3.min.js"></script>
+  <script src="/javascripts/raphael.js"></script>
+  <script src="/javascripts/fretboard_drawer.js"></script>
 </head>
 <body>
-<div>By Sam Barrientos</div>
-<%= yield %>
+  <div>Guitar Logic</div>
+  <div class="content">
+    <%= yield %>
+  </div>
 </body>
 </html>

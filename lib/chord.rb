@@ -1,4 +1,4 @@
-require_relative "string.rb"
+require_relative "guitar_string.rb"
 
 class Chord
 

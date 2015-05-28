@@ -1,4 +1,4 @@
-require_relative "string.rb"
+require_relative "guitar_string.rb"
 
 class Scale
 
@@ -45,7 +45,7 @@ class Scale
     string_notes = []
     @tuning.each do |s|
       notes = []
-      string = String.new(s)
+      string = GuitarString.new(s)
 
       scale_notes.each do |n|
         if options[:frets_only]

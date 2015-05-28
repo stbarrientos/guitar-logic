@@ -1,6 +1,6 @@
-require "string"
+require "guitar_string"
 
-RSpec.describe String, "#open_note" do
+RSpec.describe GuitarString, "#open_note" do
 
   context "every string starts with an open note" do
 

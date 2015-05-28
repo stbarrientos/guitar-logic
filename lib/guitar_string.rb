@@ -1,6 +1,6 @@
 require_relative "note.rb"
 
-class String
+class GuitarString
 
   attr_accessor :name, :open_note, :prev_string, :next_string, :prev_interval, :next_interval
 

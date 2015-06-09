@@ -1,17 +1,5 @@
 $(document).ready(function(){
 
-  function diagnose(notes){
-    $.ajax({
-      url: "/diagnose",
-      method: "POST",
-      dataType: "json",
-      data: {"notes": notes},
-      success: function(data){
-        alert("This Chord Is " + data["name"] + ". It is made up of " + data["notes"].join(", "))
-      }
-    });
-  };
-
   $("#diagnose-chord-btn").on("click", function(){
     var notes = []
     $(".highlighted").each(function(x,val){
@@ -22,6 +10,18 @@ $(document).ready(function(){
         notes.push(note);
       };
     });
-    diagnose(notes);
+    chordArray = diagnoseChord(notes);
+    if (chordArray.length > 1){
+      report("Those Notes Make Up " + chordArray[0].fullName())
+    } else if (chordArray.length > 1){
+      report("Multiple Chords Match Those Notes:\n" + chordArray)
+    } else {
+      report("No Chord Found That Matches Those Notes")
+    }
   });
+
+  function report(message){
+    alert(message);
+  };
+
 });

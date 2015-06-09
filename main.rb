@@ -12,9 +12,7 @@ get "/" do
 end
 
 post "/diagnose" do
-  puts "\n\n\n\n#{params}\n\n\n\n"
   chord = Chord.diagnose(params["notes"])
   @notes = chord.send("list_#{chord.tone.downcase}_notes")
-  puts "\n\n\nChord: #{chord.inspect}\n\n\n"
   {name: chord.full_name, notes: @notes}.to_json
 end

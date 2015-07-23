@@ -22,7 +22,7 @@ Note.prototype = {
       this.nextInterval = ref["nextInterval"];
       this.prevInterval = ref["prevInterval"];
     };
-  },
+  }, 
 
   nextNote: function(){
     return new Note(referenceTable[this.noteName[0]]["nextNote"]);

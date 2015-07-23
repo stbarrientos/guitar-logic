@@ -11,12 +11,15 @@ $(document).ready(function(){
       };
     });
     chordArray = diagnoseChord(notes);
-    if (chordArray.length > 1){
-      report("Those Notes Make Up " + chordArray[0].fullName())
+    if (chordArray.length == 1){
+      report("Those Notes Make Up " + chordArray[0].fullName());
     } else if (chordArray.length > 1){
-      report("Multiple Chords Match Those Notes:\n" + chordArray)
+      var chordNames = chordArray.map(function(chord){
+        return chord.fullName();
+      }).join(", ");
+      report("Multiple Chords Match Those Notes:\n" + chordNames);
     } else {
-      report("No Chord Found That Matches Those Notes")
+      report("No Chord Found That Matches Those Notes");
     }
   });
 

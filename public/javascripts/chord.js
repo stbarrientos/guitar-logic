@@ -117,7 +117,6 @@ function diagnoseChord(notesArray){
       };
 
       if (variationScore > personalScore){
-        console.log("new best chord score: " + variationScore + ", for " + variationsNamesArray[j]);
         scoreKeeper = [variationsNamesArray[j],variationScore];
         personalScore = variationScore;
       };
@@ -133,12 +132,10 @@ function diagnoseChord(notesArray){
       // Set the new current winner
       currentWinner = [chord];
       score = scoreKeeper[1];
-      console.log("new current winner: " + currentWinner[0].fullName())
     } else if (scoreKeeper[1] === score){
        // If we have a tie, add him to the current winner array
        chord.tone = scoreKeeper[0];
        currentWinner.push(chord);
-       console.log("new current winner tie: " + currentWinner)
     };
   };
   

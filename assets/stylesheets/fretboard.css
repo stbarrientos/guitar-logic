@@ -8,7 +8,7 @@
 
 
 body {
-  background-image: url("http://www.freshlytechy.com/wp-content/uploads/2013/04/EVNTLIVE-Offers-Live-Concert-Streaming-Platform.jpg");
+  background-image: url("../images/crowd.jpg");
   background-size: cover;
   background-repeat: none;
   background-position: center;
@@ -97,4 +97,54 @@ hr {
 .note .highlighted {
   border-radius: 100%;
   border: 1px solid red;
+}
+
+.note div {
+  cursor: pointer;
+}
+
+.modal {
+  position: absolute;
+  top: 30vh;
+  left: 30vw;
+  width: 40vw;
+  z-index: 10;
+  background-color: #EEE;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.modal-header {
+  padding: 10px;
+  text-align: center;
+  color: #666;
+  font-size: 20px;
+  border-bottom: 1px solid #DDD;
+}
+
+.modal-body {
+  padding: 10px;
+  color: #333;
+  font-size: 15px;
+}
+
+.modal-footer {
+  padding: 10px;
+  border-top: 1px solid #DDD;
+  text-align: right;
+  color: #666;
+}
+
+#background-blocker {
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  background-color: rgba(10,10,10,0.8);
+  z-index: 5;
+}
+
+.hidden {
+  display: none;
 }

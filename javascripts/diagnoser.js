@@ -1,36 +1,45 @@
-$(document).ready(function(){
+document.addEventListener("DOMContentLoaded", function() {
 
-  $("#diagnose-chord-btn").on("click", function(){
+  var modal = new Modal({
+    "element": document.getElementById("chord-modal"),
+    "header": "Chord Diagnoser",
+    "footer": "<button id='modal-close'>Close</button>"
+  });
+
+  document.getElementById("modal-close").addEventListener("click", function(){
+    modal.hide();
+  });
+
+  document.getElementById("diagnose-chord-btn").addEventListener("click", function(){
     var notes = []
-    $(".highlighted").each(function(x,val){
-      var note = $(val).html()
-      if (note === "-"){
-        notes.push($(val).attr("data-name"));
+    var targetFrets = document.getElementsByClassName("highlighted");
+    for (var i = 0; i < targetFrets.length; i++){
+      var note = targetFrets[i];
+      if (note.innerHTML === "-"){
+        notes.push(note.getAttribute("data-name"));
       } else {
-        notes.push(note);
+        notes.push(note.innerHTML);
       };
-    });
+    };
+
     chords = Chord.evaluateDegrees(notes);
     var result = "";
     var counter = 0;
     for (key in chords){
       if (chords[key] != null) {
-        result += "\n" + key + ", Degrees: " + chords[key];
+        result += key + ", Degrees: " + chords[key] + "<br>";
         counter++;
       };
     };
-
     if (counter == 1){
-      report("Those Notes Make Up: " + result);
+      modal.modalBody = result;
     } else if (counter > 1){
-      report("Multiple Chords Match Those Notes:" + result);
+      modal.modalBody = result;
     } else {
-      report("No Chord Found That Matches Those Notes");
+      modal.modalBody("No Chord Found That Matches Those Notes");
     };
+    modal.setBody().show();
   });
-
-  function report(message){
-    alert(message);
-  };
-
 });
+
+

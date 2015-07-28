@@ -4,10 +4,11 @@
   <link href="../assets/stylesheets/fretboard.css" rel="stylesheet">
   <script src="../javascripts/jquery-1.11.3.min.js"></script>
   <script src="../javascripts/fretboard_manager.js"></script>
-  <script src="../javascripts/diagnoser.js"></script>
   <script src="../javascripts/note.js"></script>
   <script src="../javascripts/guitar_string.js"></script>
   <script src="../javascripts/chord.js"></script>
+  <script src="../javascripts/modal.js"></script>
+  <script src="../javascripts/diagnoser.js"></script>
 </head>
 <body>
   <nav>
@@ -24,5 +25,11 @@
       </div>
     </div>
   </div>
+  <div id="chord-modal" class="modal hidden">
+    <div class="modal-header"></div>
+    <div class="modal-body"></div>
+    <div class="modal-footer"></div>
+  </div>
+  <div id="background-blocker" class="hidden"></div>
 </body>
 </html>

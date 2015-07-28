@@ -1,13 +1,3 @@
-var referenceTable = {
-  "A": {"nextInterval": 1, "prevInterval": 1, "nextNote": "B", "prevNote": "G"},
-  "B": {"nextInterval": 0.5, "prevInterval": 1, "nextNote": "C", "prevNote": "A"},
-  "C": {"nextInterval": 1, "prevInterval": 0.5, "nextNote": "D", "prevNote": "B"},
-  "D": {"nextInterval": 1, "prevInterval": 1, "nextNote": "E", "prevNote": "C"},
-  "E": {"nextInterval": 0.5, "prevInterval": 1, "nextNote": "F", "prevNote": "D"},
-  "F": {"nextInterval": 1, "prevInterval": 0.5, "nextNote": "G", "prevNote": "E"},
-  "G": {"nextInterval": 1, "prevInterval": 1, "nextNote": "A", "prevNote": "F"}
-};
-
 var Note = function(noteName){
   this.noteName = noteName;
   this.classify();
@@ -18,18 +8,18 @@ Note.prototype = {
     if (this.noteName.length > 1){
       this.nextInterval = 0.5, this.prevInterval = 0.5
     } else {
-      ref = referenceTable[this.noteName]
+      ref = Note.allNotesWithIntervals[this.noteName]
       this.nextInterval = ref["nextInterval"];
       this.prevInterval = ref["prevInterval"];
     };
   }, 
 
   nextNote: function(){
-    return new Note(referenceTable[this.noteName[0]]["nextNote"]);
+    return new Note(Note.allNotesWithIntervals[this.noteName[0]]["nextNote"]);
   },
 
   prevNote: function(){
-    return new Note(referenceTable[this.noteName[0]]["prevNote"]);
+    return new Note(Note.allNotesWithIntervals[this.noteName[0]]["prevNote"]);
   },
 
   nextHalfStep: function(){
@@ -41,7 +31,7 @@ Note.prototype = {
     if (this.noteName.length > 1){
 
       // Return the next note value of the half step down
-      return new Note(referenceTable[this.noteName[0]]["nextNote"]);
+      return new Note(Note.allNotesWithIntervals[this.noteName[0]]["nextNote"]);
     } else {
 
       // Return the sharp version of this note
@@ -61,7 +51,7 @@ Note.prototype = {
     } else {
 
       // Return the sharp version of the previous whole note
-      return new Note(referenceTable[this.noteName]["prevNote"] + "#");
+      return new Note(Note.allNotesWithIntervals[this.noteName]["prevNote"] + "#");
     }
   },
 
@@ -78,15 +68,17 @@ Note.prototype = {
 
 };
 
-// function runValidations(){
-//   console.log("Beggining Note Validations...");
-//   var v = new Validation
-// }
+Note.allNotes = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]
 
-// function validateNextNote(validation){
-//   var a = new Note("A");
-//   validation.it("#nextNote of A is B", a.nextNote().noteName, "B");
-// };
+Note.allNotesWithIntervals = {
+  "A": {"nextInterval": 1, "prevInterval": 1, "nextNote": "B", "prevNote": "G"},
+  "B": {"nextInterval": 0.5, "prevInterval": 1, "nextNote": "C", "prevNote": "A"},
+  "C": {"nextInterval": 1, "prevInterval": 0.5, "nextNote": "D", "prevNote": "B"},
+  "D": {"nextInterval": 1, "prevInterval": 1, "nextNote": "E", "prevNote": "C"},
+  "E": {"nextInterval": 0.5, "prevInterval": 1, "nextNote": "F", "prevNote": "D"},
+  "F": {"nextInterval": 1, "prevInterval": 0.5, "nextNote": "G", "prevNote": "E"},
+  "G": {"nextInterval": 1, "prevInterval": 1, "nextNote": "A", "prevNote": "F"}
+};
 
 
 

@@ -1,6 +1,6 @@
-var Chord = function(chordName,tone){
-  this.chordName = chordName;
-  this.tone = tone;
+var Chord = function(attributes){
+  this.chordName = attributes["chordName"];
+  this.tone = attributes["tone"];
 };
 
 Chord.prototype = {
@@ -78,69 +78,146 @@ Chord.prototype = {
 
     // Return the array
     return notes;
-  },
+  }
+
+
 
 };
 
-function diagnoseChord(notesArray){
-  // Function to diagnose a chord based on an array of notes. Start with a score variable and an empty current winner
-  // This function works by tracking the chord with the highest "score", the most matched notes
-  var score = 0;
-  var currentWinner = [];
+// Object to keep track of all known interval values for the different chords
+Chord.allChordIntervals = {
+  "Major": "WWHWWWH",
+  "Minor": "WHWWWWH"
+};
 
-  // An array of every possible note
-  var allNotes = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"];
+// Object to keep track of the different degrees that make up different chords
+Chord.degrees = {};
 
-  // Loop through every note
-  for (var i = 0; i < allNotes.length; i++){
-    // Create a new chord with the note as the root
-    var chord = new Chord(allNotes[i]);
+Chord.diagnose = function(notesArray){
 
-    var personalScore = 0;
+  // Keep track of the winning interval
+  var winningIntervalScore = 0;
+  var winningInterval = "";
+  var winningChord = "";
+      // Keep track of the current winning root note
+    var winningRootScore = 0;
+    var winningRoot = "";
 
-    // Create an array of all of the different chord variations we want to test
-    var variationsArray = [chord.listMajorNotes(),chord.listMinorNotes()];
-    var variationsNamesArray = ["Major","Minor"];
+  // Loop through each saved interval value in the Chord.intervals store
+  for (key in Chord.allChordIntervals){
 
-    // Our object to keep track of which variation has the highest score
-    var scoreKeeper = [];
+    // We will save the key as the interval name, and the interval string as intervals
+    var currentIntervalName = key;
+    var intervals = Chord.allChordIntervals[key];
 
-    // Go through each variation of the chord
-    for (var j = 0; j < variationsArray.length; j++){
-      // Keep track of each variation's score
-      var variationScore = 0;
+    // Go through every note from the Note.intervals object so we cover every possibility
+    for (i in Note.allNotes){
+      var root = Note.allNotes[i];
 
-      // Loop through the variation's notes
-      for (var x = 0; x < variationsArray[j].length; x++){
-        // If this variation has a common note with the parameter passed to the function, increment it's score
-        if (notesArray.indexOf(variationsArray[j][x]) > -1) variationScore++;
+      // Keep Track of this root's score
+      var rootScore = 0;
+
+      // Save the current note
+      var currentNote = root;
+
+      for (var x = 0; x < intervals.length; x++){
+
+        // Save the chord name so we know the tonality at the end of the function
+        var chordName = root + ":" + currentIntervalName
+
+        // If the current note is in the notesArray, add to the note score
+        if (notesArray.indexOf(currentNote) > -1) {
+          rootScore ++;
+        };
+
+        // If we have a new winner, store it
+        if (rootScore > winningRootScore){
+          winningRootScore = rootScore;
+
+          // Only update the winning note if it is different than the current root
+          if (winningRoot != chordName){ winningRoot = chordName; };
+
+        // if there is a tie, add the current note to the winning note
+        } else if (rootScore === winningRootScore && winningRoot !== root){
+
+          // if winningNote is already an array, push current note into it
+          if (Object.prototype.toString.call( winningRoot ) === "[object Array]" && winningRoot.indexOf(chordName) === -1){
+            winningRoot.push(chordName);
+
+          // if winning note is not an array, turn it into an array with itself and the current note as it's items
+          } else if (Object.prototype.toString.call( winningRoot ) !== "[object Array]" && winningRoot !== chordName) {
+            winningRoot = [winningRoot, chordName];
+          };
+        };
+
+        // Save the current chracter of the intervals string
+        var currentInterval = intervals.charAt(x);
+
+        // If the current intervale is a W for whole step, set the current note to the next whole step
+        if (currentInterval === "W"){
+          currentNote = new Note(currentNote).nextWholeStep().noteName;
+
+        // If the current interval is a H for half step, set the current note to the next half step
+        } else if (currentInterval === "H"){
+          currentNote = new Note(currentNote).nextHalfStep().noteName;
+
+        // Otherwise the interval is bad, just stop
+        } else {
+          return false;
+        };
       };
-
-      if (variationScore > personalScore){
-        scoreKeeper = [variationsNamesArray[j],variationScore];
-        personalScore = variationScore;
-      };
-
     };
 
-    // Compare this chord's highest variation score to the high score
-    if (scoreKeeper[1] > score){
-
-      // If we have a new high score, update the chords tone/variation
-      chord.tone = scoreKeeper[0];
-
-      // Set the new current winner
-      currentWinner = [chord];
-      score = scoreKeeper[1];
-    } else if (scoreKeeper[1] === score){
-       // If we have a tie, add him to the current winner array
-       chord.tone = scoreKeeper[0];
-       currentWinner.push(chord);
+    if (winningRootScore > winningIntervalScore){
+      winningIntervalScore = winningRootScore;
+      winningInterval = currentIntervalName;
+    } else if (winningRootScore === winningIntervalScore){
+      if (Object.prototype.toString.call( winningInterval ) === "[object Array]" && winningRoot.indexOf(currentIntervalName) === -1){
+        winningRoot.push(currentIntervalName);
+      } else if (Object.prototype.toString.call( winningInterval ) !== "[object Array]") {
+        winningInterval = [winningInterval, currentIntervalName];
+      };
     };
   };
-  
-  return currentWinner;
+
+  return winningRoot;
 };
 
+Chord.evaluateDegrees = function(notesArray){
 
+  // Keep our result in an object
+  var results = {};
+
+  // Diagnose the notes array and save the chords
+  var chords = Chord.diagnose(notesArray);
+
+  // Go through each root, line up the degrees
+  for ( i in chords ){
+
+    // Split the chord string to get the root and the tone, then retrieve the intervals from the allChordIntervals object
+    var chordSplit = chords[i].split(":")
+    var root = chordSplit[0];
+    var tone = chordSplit[1];
+    var intervals = Chord.allChordIntervals[tone];
+
+    // Store the degrees that align with each root
+    var degrees = [];
+    var currentNote = root;
+
+    for (x in intervals){
+      if (notesArray.indexOf(currentNote) !== -1){
+        degrees.push(parseInt(x)+1);
+      };
+      if (intervals[x] === "W"){
+        currentNote = new Note(currentNote).nextWholeStep().noteName;
+      } else if (intervals[x] === "H"){
+        currentNote = new Note(currentNote).nextHalfStep().noteName;
+      } else {
+        return false;
+      };
+    };
+    results[root + " " + tone] = degrees;
+  };
+  return results;
+};
 

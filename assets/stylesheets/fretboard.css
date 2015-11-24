@@ -103,6 +103,16 @@ hr {
   cursor: pointer;
 }
 
+#tab-container {
+  margin: 30px;
+}
+
+#tab-container textarea {
+  width: 100%;
+  height: 100px;
+  font-family: monospace;
+}
+
 .modal {
   position: absolute;
   top: 30vh;

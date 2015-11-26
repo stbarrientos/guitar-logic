@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function() {
     6 : []
   };
 
+  var tapToAdd = false;
+
   // For non ruby implementation
   function drawFretboard(){
     var stringNames = ["E","B","G","D","A","E"];
@@ -69,11 +71,22 @@ document.addEventListener("DOMContentLoaded", function() {
   var noteElements = document.getElementsByClassName("note")
   for (var i = 0; i < noteElements.length; i++){
     noteElements[i].addEventListener("click", function(){
-      var div = this.getElementsByTagName("div")[0];
-      if (div.classList.contains("highlighted")){
-        div.classList.remove("highlighted");
+      if (tapToAdd){
+        var dataString = this.getAttribute("data-string")
+        tab[dataString].push(this.getAttribute("data-fret"));
+        for (var i = 1; i <= 6; i++){
+          if (dataString != i){
+            tab[i].push("-");
+          };
+        };
+        writeTabToPage();
       } else {
-        div.classList.add("highlighted");
+        var div = this.getElementsByTagName("div")[0];
+        if (div.classList.contains("highlighted")){
+          div.classList.remove("highlighted");
+        } else {
+          div.classList.add("highlighted");
+        };
       };
     });
   };
@@ -121,12 +134,27 @@ document.addEventListener("DOMContentLoaded", function() {
     writeTabToPage();
   });
 
+  // Clear Tab
+  document.getElementById("clear-tab").addEventListener("click", function(){
+    document.getElementsByTagName("textarea")[0].value = "";
+  });
+
+  // Toggle tap to add mode
+  document.getElementById("tap-to-add").addEventListener("click", function(){
+    tapToAdd = !tapToAdd;
+    toggleButtons = document.getElementsByClassName("clicked");
+    if (toggleButtons.length === 0){
+      this.className = "clicked";
+    } else {
+      toggleButtons[0].className = "";
+    };
+  });
+
   function writeTabToPage(){
     var textarea = document.getElementsByTagName("textarea")[0];
 
     // Clear the textarea
     textarea.value = "";
-    console.log(tab)
 
     // Go through each string
     for (var i = 1; i <= 6; i++){
